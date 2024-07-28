@@ -3,9 +3,11 @@ package duck;
 public class DuckSimulator {
     public static void main(String[] args) {
         DuckSimulator simulator = new DuckSimulator();
-        AbstractDuckFactory duckFactory = new CountingDuckFactory();
+        AbstractDuckFactory duckFactory = new DuckFactory();
+        AbstractDuckFactory duckCountingFactory = new CountingDuckFactory();
+        AbstractDuckFactory duckCountPoliteFactory = new PoliteAndCountingDuckFactory();
 
-        simulator.simulate(duckFactory);
+        simulator.simulate(duckCountPoliteFactory);
     }
 
     void simulate(AbstractDuckFactory duckFactory) {
@@ -15,14 +17,13 @@ public class DuckSimulator {
         Quackable rubberDuck = duckFactory.createRubberDuck();
 
         Quackable gooseDuck = new QuackAdapter(new Goose());
+        Quackable pigeon = new PigeonAdaptor(new Pigeon());
 
         Flock flock1 = new Flock();
         flock1.add(mallardDuck);
         flock1.add(redheadDuck);
-
-        Flock flock2 = new Flock();
-        flock2.add(duckCall);
-        flock2.add(rubberDuck);
+        flock1.add(duckCall);
+        flock1.add(rubberDuck);
 
         System.out.println("\nDuck Simulator");
 //        simulate(mallardDuck);
@@ -32,7 +33,6 @@ public class DuckSimulator {
 //        simulate(gooseDuck);
 
         simulate(flock1);
-        simulate(flock2);
 
         System.out.println("Number of quack = " + QuackCounter.getNumOfQuacks());
     }
